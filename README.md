@@ -205,3 +205,101 @@ Managing who can do what on the system.
     * Edit a protected system configuration file: `sudo nano /etc/hosts`
 
 
+---
+
+### 🗃️ Archiving & Compression
+
+A fundamental task for backups, transfers, and log management.
+
+#### `tar` - Tape Archive
+* **What it does**: Bundles multiple files and directories into a single archive file (`.tar`). It's often combined with a compression utility.
+* **Examples**:
+    * Create a gzipped archive: `tar -czvf archive-name.tar.gz /path/to/directory`
+        * `c`: create
+        * `z`: compress with gzip
+        * `v`: verbose (show files being processed)
+        * `f`: specifies the filename
+    * Extract a gzipped archive: `tar -xzvf archive-name.tar.gz`
+    * List the contents of an archive without extracting: `tar -tvf archive-name.tar.gz`
+
+---
+
+### 🕵️ File Analysis & Forensics
+
+Crucial for security investigations, reverse engineering, and debugging.
+
+#### `file` - Determine File Type
+* **What it does**: Inspects a file's header to determine its type, rather than just relying on the extension.
+* **Examples**:
+    * Identify an unknown executable: `file unknown_binary`
+    * Check if a file is a script or a compiled program: `file my_script`
+
+#### `strings` - Find Printable Strings in Files
+* **What it does**: Extracts human-readable text strings from binary or data files. Incredibly useful for finding clues in unknown executables.
+* **Example**:
+    * Look for IP addresses, URLs, or plaintext secrets in a compiled program: `strings /usr/bin/sshd | grep "OpenSSH"`
+
+#### `diff` - Compare Files Line by Line
+* **What it does**: Shows the differences between two text files. Essential for tracking changes in code or configuration.
+* **Example**:
+    * Compare the old and new versions of a config file: `diff httpd.conf.old httpd.conf.new`
+
+#### `md5sum` / `sha256sum` - Calculate Hashes
+* **What it does**: Computes and checks cryptographic hashes. Used to verify file integrity and ensure a downloaded file hasn't been tampered with.
+* **Examples**:
+    * Generate a SHA256 hash for a file: `sha256sum ubuntu-22.04.iso`
+    * Verify a downloaded file against a provided hash: `sha256sum -c hashes.txt`
+
+---
+
+### 💻 User & Remote Session Management
+
+Commands for managing remote access and seeing who is on the system.
+
+#### `ssh` - Secure Shell
+* **What it does**: The standard for securely connecting to and managing remote Linux servers.
+* **Examples**:
+    * Connect to a server as a specific user: `ssh user@remote-host.com`
+    * Connect on a different port: `ssh user@remote-host.com -p 2222`
+    * **Pro Tip**: Use key-based authentication instead of passwords for vastly improved security.
+
+#### `scp` / `rsync` - Secure Copy / Remote Sync
+* **What it does**: Securely copies files over an SSH connection. `scp` is simple; `rsync` is more powerful for syncing directories and can resume transfers.
+* **Examples**:
+    * Copy a local file to a remote server with `scp`: `scp localfile.txt user@remote-host.com:/remote/dir/`
+    * Sync a local directory to a remote server with `rsync`: `rsync -avz --progress ./local-project/ user@remote-host.com:/var/www/project`
+
+#### `who` / `w`
+* **What it does**: Shows who is currently logged into the machine. `w` provides more detail, including what command each user is running.
+* **Example**: `w`
+
+#### `last`
+* **What it does**: Shows a history of the last logged-in users. Very useful for a quick security audit.
+* **Example**: `last`
+
+---
+
+### 🛠️ Advanced Tools & Command-Line Utilities
+
+These commands enhance your ability to combine and control other programs.
+
+#### `xargs` - Execute Command Lines from Standard Input
+* **What it does**: Builds and executes commands from standard input. It's the perfect companion to `find`.
+* **Example**:
+    * Find all files ending in `.tmp` and delete them efficiently: `find . -name "*.tmp" -print0 | xargs -0 rm`
+        * The `-print0` and `-0` flags handle filenames with spaces correctly.
+
+#### `tee` - Read from Stdin, Write to Stdout and Files
+* **What it does**: Splits the output of a command, allowing you to see it on the screen *and* save it to a file at the same time.
+* **Example**:
+    * Run a script and save its output to a log file without losing the live view: `./run-tests.sh | sudo tee /var/log/test-run.log`
+
+#### `lsof` - List Open Files
+* **What it does**: A powerful diagnostic tool that lists all files currently opened by processes. Since Linux treats everything as a file (including network sockets), you can use it for many things.
+* **Examples**:
+    * Find out which process is using port 80: `sudo lsof -i :80`
+    * See all files opened by a specific process (PID 1234): `sudo lsof -p 1234`
+
+Adding these to your tutorial will give your audience a more complete and powerful command-line toolkit.
+
+
