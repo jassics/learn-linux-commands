@@ -22,6 +22,8 @@ These are the absolute fundamentals for navigating and interacting with a Linux 
     * List contents of the current directory: `ls`
     * List with details (permissions, owner, size, date), including hidden files: `ls -la`
     * List in a human-readable format (e.g., KB, MB): `ls -lh`
+    * List in a human-readale format in time based sorted, showing latest at the bottom: `ls -lrth`
+    * Listing files recursively: `ls -R`
 
 ### `cd` - Change Directory
 * **What it does**: Navigates between directories.
@@ -29,6 +31,7 @@ These are the absolute fundamentals for navigating and interacting with a Linux 
     * Go to the `/var/log` directory: `cd /var/log`
     * Go back to the previous directory: `cd -`
     * Go to your home directory: `cd` or `cd ~`
+    * Go back to up level up:  `cd ..`
 
 ### `pwd` - Print Working Directory
 * **What it does**: Shows the full path of your current directory.
